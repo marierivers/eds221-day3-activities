@@ -1,0 +1,38 @@
+---
+title: "Toolik Chem"
+author: "Marie Rivers"
+date: "8/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+toolik_biochem <- read_csv(here("data", "2011_Kling_Akchem.csv"), na = ".") %>% 
+  janitor::clean_names()
+
+inlet_biochem <- toolik_biochem %>% 
+  filter(site == "Toolik Inlet" | site == "Toolik inlet") %>% 
+  select(p_h, doc_u_m, tdn_u_m)
+
+inlet_biochem_summary <- inlet_biochem %>% 
+  summarize(mean_ph = mean(p_h, na.rm = TRUE),
+            mean_doc = mean(doc_u_m, na.rm = TRUE),
+            mean_tdn = mean(tdn_u_m, na.rm = TRUE))
+
+mean_biochem <- vector(mode = "numeric", length = ncol(inlet_biochem))
+for (i in 1:ncol(inlet_biochem)) {
+  mean_val <- mean(inlet_biochem[[i]], na.rm = TRUE)
+  mean_biochem[[i]] <- mean_val
+}
+
+apply(X = inlet_biochem, 2, mean, na.rm = TRUE)
+
+map_df(.x = inlet_biochem, .f = mean)
+
+```
