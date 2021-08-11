@@ -1,0 +1,80 @@
+---
+title: "conditionals_loops"
+author: "Marie Rivers"
+date: "8/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+## Part 1. Conditional statements & for loops
+### Conditional statements
+```{r}
+# Task 1
+pm2_5 <- 248
+
+if (pm2_5 < 100) {
+  print("low to moderate risk")
+} else if (pm2_5 >= 100 & pm2_5 < 150) {
+  print("unhealthy for sensitive groups")
+} else {
+  print("health risk present")
+}
+```
+```{r}
+# Task 2
+species <- "blue whale"
+if (str_detect(species, "whale")) {
+  print("You found a whale!")
+} else {
+  print("better luck next time")
+}
+```
+
+```{r}
+# Task 3
+max_airtemp_c <- 24.1
+if (max_airtemp_c > 27) {
+  print("temperature too high")
+} else {
+  print("temperature OK")
+}
+```
+
+```{r}
+# Task 4
+base_burrito <- 6.50
+main_ingredient <- "veggie"
+
+switch(main_ingredient,
+       "veggie" = print(base_burrito),
+       "chicken" = print(base_burrito + 3.00),
+       "steak" = print(base_burrito + 3.25))
+
+```
+### For loops
+```{r}
+# task 5
+fish <- c(8, 10, 12, 23)
+total_fish <- sum(fish)
+percent_pop <- vector(mode = "numeric", length = length(fish))
+for (i in seq_along(fish)) {
+  fishy_fish <- 100 * fish[i] / total_fish
+  percent_pop[i] <- fishy_fish
+}
+
+percent_pop
+```
+
+```{r}
+# Task 6
+month.name
+months <- c(month.name)
+seq_along(months)
+
+for (i in seq_along(months)) {
+  print(paste(months[i], "is month", i))
+}
+```
